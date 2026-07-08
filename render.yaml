@@ -1,0 +1,31 @@
+services:
+  # 1. Express Backend Web Service
+  - type: web
+    name: groweasy-backend
+    env: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: PORT
+        value: 5001
+      - key: GROQ_API_KEY
+        sync: false # You will be prompted to enter this in the Render dashboard
+      - key: NODE_ENV
+        value: production
+
+  # 2. Next.js Frontend Web Service
+  - type: web
+    name: groweasy-frontend
+    env: node
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          name: groweasy-backend
+          type: web
+          property: host
