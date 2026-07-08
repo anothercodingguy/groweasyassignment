@@ -15,4 +15,8 @@ const upload = multer({
 // Route for CSV uploading and parsing
 router.post('/upload', upload.single('file'), ImportController.uploadAndProcessCsv);
 
+// Database management routes
+router.get('/leads', ImportController.getLeads);
+router.post('/leads/clear', ImportController.clearLeads);
+
 export default router;
