@@ -154,7 +154,15 @@ export default function ImporterDashboard() {
     }, 800);
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
+      let apiUrl = '';
+      if (typeof window !== 'undefined') {
+        const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        apiUrl = isLocalhost ? 'http://localhost:5001' : '';
+      }
+      if (process.env.NEXT_PUBLIC_API_URL) {
+        apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      }
+
       // Connect to our backend API
       const response = await fetch(`${apiUrl}/api/upload`, {
         method: 'POST',
