@@ -17,6 +17,17 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Default welcome route
+app.get('/', (req, res) => {
+  res.status(200).json({ 
+    message: 'Welcome to the GrowEasy CRM AI Importer API.',
+    healthCheck: '/api/health',
+    endpoints: {
+      upload: 'POST /api/upload'
+    }
+  });
+});
+
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'healthy', timestamp: new Date().toISOString() });
