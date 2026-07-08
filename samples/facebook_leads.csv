@@ -1,0 +1,5 @@
+created_time,full_name,email_address,phone_number,company_name,city_location,state_region,source,custom_status,notes
+2026-05-13 14:20:48,John Doe,john.doe@example.com,+91 98765 43210,GrowEasy,Mumbai,Maharashtra,leads_on_demand,GOOD_LEAD_FOLLOW_UP,Client is asking to reschedule demo. Also check other number: 9876543219.
+2026-05-13 14:25:30,Sarah Johnson,sarah.johnson@example.com,9876543211,Tech Solutions,Bangalore,Karnataka,meridian_tower,DID_NOT_CONNECT,Person was busy, will try again next week.
+2026-05-13 14:30:15,Rajesh Patel,rajesh.patel@example.com,,Startup Inc,Delhi,Delhi,eden_park,BAD_LEAD,Not interested in our services.
+2026-05-13 14:35:22,Priya Singh,priya.singh@example.com,+919876543213,Enterprise Corp,Pune,Maharashtra,,SALE_DONE,Deal closed, onboarding in progress.

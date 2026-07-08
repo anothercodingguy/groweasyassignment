@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+/node_modules
+/*/node_modules
+
+# Next.js Build Output
+.next/
+/frontend/.next
+
+# TypeScript Compiler Output
+dist/
+/backend/dist
+
+# Environment variables
+.env
+.env.local
+.env.production
+.env.development
+
+# OS Metadata
+.DS_Store
+Thumsh.db
