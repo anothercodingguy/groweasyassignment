@@ -36,8 +36,8 @@ async function runTests() {
     
     const skippedRecord = invalidSummary.records.find(r => r.status === 'skipped');
     assert(
-      skippedRecord?.skip_reason?.toLowerCase().includes('email') || 
-      skippedRecord?.skip_reason?.toLowerCase().includes('contact'),
+      !!(skippedRecord?.skip_reason?.toLowerCase().includes('email') || 
+         skippedRecord?.skip_reason?.toLowerCase().includes('contact')),
       'Skipped record has appropriate skip reason'
     );
 

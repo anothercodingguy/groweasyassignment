@@ -39,6 +39,15 @@ export interface ImportSummary {
 }
 
 export class AiService {
+  private static getGroqClient() {
+    const apiKey = process.env.GROQ_API_KEY;
+    if (!apiKey) return null;
+    return new OpenAI({
+      apiKey: apiKey,
+      baseURL: 'https://api.groq.com/openai/v1'
+    });
+  }
+
   private static getGeminiClient() {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) return null;
@@ -151,13 +160,36 @@ export class AiService {
    */
   private static async processBatchWithLlm(
     batch: RawCsvRecord[],
+    groqClient: OpenAI | null,
     geminiClient: any,
     openAiClient: OpenAI | null
   ): Promise<any[]> {
     const systemInstruction = this.getSystemInstructions();
     const prompt = `Map the following raw CSV records into the CRM lead format. Here is the array of raw records:\n${JSON.stringify(batch, null, 2)}`;
 
-    // 1. Try Gemini first
+    // 1. Try Groq first
+    if (groqClient) {
+      try {
+        const response = await groqClient.chat.completions.create({
+          model: 'llama-3.1-8b-instant',
+          response_format: { type: 'json_object' },
+          messages: [
+            { role: 'system', content: systemInstruction },
+            { role: 'user', content: prompt }
+          ]
+        });
+
+        const text = response.choices[0].message.content || '{}';
+        const parsed = JSON.parse(text);
+        if (parsed.mapped_records) {
+          return parsed.mapped_records;
+        }
+      } catch (err: any) {
+        console.warn('Groq batch processing failed, falling back. Error:', err.message);
+      }
+    }
+
+    // 2. Try Gemini second
     if (geminiClient) {
       try {
         const model = geminiClient.getGenerativeModel({
@@ -253,6 +285,7 @@ export class AiService {
     const { valid, skipped } = this.preFilterRecords(records);
     const results: ProcessedRecord[] = [...skipped];
     
+    const groqClient = this.getGroqClient();
     const geminiClient = this.getGeminiClient();
     const openAiClient = this.getOpenAiClient();
 
@@ -274,7 +307,7 @@ export class AiService {
       while (attempts < maxAttempts && !success) {
         try {
           attempts++;
-          mappedBatchResults = await this.processBatchWithLlm(batch, geminiClient, openAiClient);
+          mappedBatchResults = await this.processBatchWithLlm(batch, groqClient, geminiClient, openAiClient);
           success = true;
         } catch (error: any) {
           console.error(`Attempt ${attempts} failed for batch ${batchIdx + 1}. Error: ${error.message}`);
