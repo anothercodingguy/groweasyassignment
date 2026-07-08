@@ -58,9 +58,8 @@ interface CrmLeadItem {
 }
 
 export default function ImporterDashboard() {
-  // Navigation & Theme
+  // Navigation
   const [activeTab, setActiveTab] = useState<'import-workspace' | 'crm-database'>('import-workspace');
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   // Import flow steps: 1 = Upload, 2 = Preview, 3 = Processing, 4 = Results
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3 | 4>(1);
@@ -176,12 +175,7 @@ export default function ImporterDashboard() {
     }
   };
 
-  // Toggle Dark Mode
-  const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-    document.documentElement.setAttribute('data-theme', newTheme);
-  };
+
 
   // Drag and Drop handlers
   const handleDrag = (e: DragEvent<HTMLDivElement>) => {
@@ -392,14 +386,6 @@ export default function ImporterDashboard() {
           <span className="sidebar-logo-text">GrowEasy</span>
         </div>
 
-        <div className="sidebar-profile">
-          <div className="profile-avatar">VT</div>
-          <div className="profile-info">
-            <span className="profile-name">VK Test</span>
-            <span className="profile-role">Owner</span>
-          </div>
-        </div>
-
         <nav className="sidebar-nav">
           <div className="sidebar-nav-group">
             <span className="nav-group-label">Core Workspace</span>
@@ -450,13 +436,6 @@ export default function ImporterDashboard() {
                     Upload, preview, and process CSV leads dynamically mapping columns using AI.
                   </p>
                 </div>
-                <button onClick={toggleTheme} className="theme-toggle" title="Toggle Theme">
-                  {theme === 'light' ? (
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-                  ) : (
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-                  )}
-                </button>
               </div>
             </div>
 
@@ -693,13 +672,6 @@ export default function ImporterDashboard() {
                   </p>
                 </div>
                 <div style={{ display: 'flex', gap: '0.75rem' }}>
-                  <button onClick={toggleTheme} className="theme-toggle" title="Toggle Theme">
-                    {theme === 'light' ? (
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-                    ) : (
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-                    )}
-                  </button>
                   <button onClick={clearLeadsDatabase} className="btn btn-secondary" style={{ color: 'var(--danger)', borderColor: 'rgba(239, 68, 68, 0.2)', background: 'rgba(239, 68, 68, 0.02)' }} title="Wipe database leads">
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '0.25rem' }}>
                       <polyline points="3 6 5 6 21 6" />
