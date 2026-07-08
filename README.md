@@ -78,6 +78,15 @@ Execute the integration test suite to verify CSV parsing and CRM mapping rules:
 npm run test --prefix backend
 ```
 
+### 5. Running with Docker (Alternative)
+You can build and launch both services inside Docker containers using:
+```bash
+# Set environment variables and run
+GEMINI_API_KEY=your_key docker-compose up --build
+```
+- **Frontend URL**: [http://localhost:3000](http://localhost:3000)
+- **Backend URL**: [http://localhost:5001](http://localhost:5001)
+
 ---
 
 ## Vercel Deployment Guide
