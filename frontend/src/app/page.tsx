@@ -163,6 +163,17 @@ export default function ImporterDashboard() {
         apiUrl = process.env.NEXT_PUBLIC_API_URL;
       }
 
+      // Prepend https:// if protocol is missing
+      if (apiUrl) {
+        apiUrl = apiUrl.trim();
+        if (!/^https?:\/\//i.test(apiUrl)) {
+          apiUrl = `https://${apiUrl}`;
+        }
+        if (apiUrl.endsWith('/')) {
+          apiUrl = apiUrl.slice(0, -1);
+        }
+      }
+
       // Connect to our backend API
       const response = await fetch(`${apiUrl}/api/upload`, {
         method: 'POST',
