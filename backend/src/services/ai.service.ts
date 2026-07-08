@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { OpenAI } from 'openai';
+import { HttpsProxyAgent } from 'https-proxy-agent';
 import dotenv from 'dotenv';
 import { RawCsvRecord } from './csv.service';
 
@@ -42,9 +43,11 @@ export class AiService {
   private static getGroqClient() {
     const apiKey = process.env.GROQ_API_KEY;
     if (!apiKey) return null;
+    const proxy = process.env.https_proxy || process.env.http_proxy;
     return new OpenAI({
       apiKey: apiKey,
-      baseURL: 'https://api.groq.com/openai/v1'
+      baseURL: 'https://api.groq.com/openai/v1',
+      httpAgent: proxy ? new HttpsProxyAgent(proxy) : undefined
     });
   }
 
@@ -58,7 +61,11 @@ export class AiService {
   private static getOpenAiClient() {
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) return null;
-    return new OpenAI({ apiKey });
+    const proxy = process.env.https_proxy || process.env.http_proxy;
+    return new OpenAI({
+      apiKey: apiKey,
+      httpAgent: proxy ? new HttpsProxyAgent(proxy) : undefined
+    });
   }
 
   /**

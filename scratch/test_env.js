@@ -1,1 +1,0 @@
-console.log("Keys in process.env:", Object.keys(process.env).filter(k => k.includes("KEY") || k.includes("API") || k.includes("SECRET") || k.includes("TOKEN") || k.includes("GEMINI") || k.includes("OPENAI") || k.includes("CLAUDE")));
